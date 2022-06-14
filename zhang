@@ -1,0 +1,109 @@
+#includeint FindChileArray(int arr[],int low,int high);
+
+int FindChileArray_coenter(int arr[],int low,int high,int mid);
+
+int main()
+
+{
+
+int i,j,mid;
+
+int arry[16]={13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7};
+
+printf("%d\n",FindChileArray(arry,0,15));
+
+return 0;
+
+}
+
+int FindChileArray(int arr[],int low,int high)
+
+{
+
+int left_sum=-100;
+
+int right_sum=-100;
+
+int sum=0;
+
+int mid;
+
+int max_left,max_right;
+
+mid=(low+high)/2;
+
+if(low==high)
+
+return arr[low];
+
+else
+
+{
+
+left_sum=FindChileArray(arr,low,mid);//中点左边
+
+right_sum=FindChileArray(arr,mid+1,high);//中点右边
+
+sum=FindChileArray_coenter(arr,low,high,mid);//跨越中点
+
+//三者取最大
+
+if(left_sum>right_sum&&left_sum>sum) return left_sum;
+
+else if(right_sum>left_sum&&right_sum>sum) return right_sum;
+
+else return sum;
+
+}
+
+}
+
+int FindChileArray_coenter(int arr[],int low,int high,int mid)
+
+{
+
+int left_sum=-100;
+
+int right_sum=-100;
+
+int sum=0;
+
+int i;
+
+int max_left,max_right;
+
+for(i=mid;i>low;i--)
+
+{
+
+sum+=arr[i];
+
+if(sum>left_sum)
+
+{
+
+left_sum=sum;
+
+max_left=i;
+
+}
+
+}
+
+sum=0;
+
+for(i=mid+1;iright_sum)
+
+{
+
+right_sum=sum;
+
+max_right=i;
+
+}
+
+}
+
+return left_sum+right_sum;
+
+}
